@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, TrendingUp, Target, Shield, Zap, Lock, Crown, Rocket, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
+import { Sparkles, TrendingUp, Target, Shield, Zap, Lock, Crown, Rocket, ArrowRight, CheckCircle2, XCircle, BarChart3, Users, DollarSign } from 'lucide-react';
 import '../styles/Home.css';
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [revenueCount, setRevenueCount] = useState(145000);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Animate revenue counter
+    const interval = setInterval(() => {
+      setRevenueCount(prev => prev + Math.floor(Math.random() * 5000) + 1000);
+    }, 2000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const handleApplyClick = () => {
@@ -15,11 +23,12 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Sticky CTA Button - Removed "Made with Emergent" badge */}
-      <button className="sticky-cta" onClick={handleApplyClick}>
-        <Rocket size={20} />
-        Apply for Access
-      </button>
+      {/* Animated Background */}
+      <div className="animated-bg">
+        <div className="gradient-orb orb-1"></div>
+        <div className="gradient-orb orb-2"></div>
+        <div className="gradient-orb orb-3"></div>
+      </div>
 
       {/* Navigation Header */}
       <header className="nav-header">
@@ -28,7 +37,7 @@ const Home = () => {
             <img src="/logo.png" alt="ShadowScale" className="logo" />
           </div>
           <nav className="nav-links">
-            <a href="#how-it-works" className="nav-link">How It Works</a>
+            <a href="#system" className="nav-link">System</a>
             <a href="#results" className="nav-link">Results</a>
             <a href="#features" className="nav-link">Features</a>
             <button className="nav-cta" onClick={handleApplyClick}>Apply Now</button>
@@ -37,375 +46,286 @@ const Home = () => {
       </header>
 
       {/* Top Banner */}
-      <div className="top-banner">
+      <div className="top-banner-immersive">
         <div className="banner-content">
-          <Sparkles size={20} className="banner-icon" />
-          <span>Built for creators serious about monetization 🚀</span>
-          <span className="banner-subtext">Limited onboarding. High-performance systems only.</span>
+          <div className="banner-pulse"></div>
+          <Sparkles size={18} className="banner-icon" />
+          <span>Limited slots. High-performance creators only.</span>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className={`hero-section ${isVisible ? 'visible' : ''}`}>
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-headline">
-              Turn Your Audience Into a <span className="gradient-text">Scalable Income System</span>
-            </h1>
-            <p className="hero-subheadline">
-              ShadowScale is an AI-powered monetization engine designed for serious creators.
-            </p>
-            <div className="hero-badge">
-              <Lock size={16} />
-              <span>Selective onboarding. Application required.</span>
+      {/* Hero Section - Complete Redesign */}
+      <section className={`hero-immersive ${isVisible ? 'visible' : ''}`}>
+        <div className="hero-content-immersive">
+          <div className="hero-text-immersive">
+            <div className="hero-badge-pill">
+              <Lock size={14} />
+              <span>This is not for everyone</span>
             </div>
-            <div className="hero-cta-group">
-              <button className="btn-primary hero-primary-cta" onClick={handleApplyClick}>
+            <h1 className="hero-headline-immersive">
+              Turn Your Audience Into a <span className="gradient-text-animated">Scalable Income Machine</span>
+            </h1>
+            <p className="hero-subheadline-immersive">
+              Not content. Not growth hacks. A real monetization system.
+            </p>
+            <div className="hero-cta-immersive">
+              <button className="btn-primary-glow" onClick={handleApplyClick}>
                 <span>Apply for Access</span>
                 <ArrowRight size={20} />
+                <div className="button-glow"></div>
               </button>
-              <button className="btn-secondary" onClick={() => document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' })}>
-                See How It Works
-              </button>
-            </div>
-            <p className="hero-microtext">
-              <Shield size={14} className="microtext-icon" />
-              Only a few creators are accepted each month.
-            </p>
-          </div>
-          
-          <div className="hero-visual">
-            <div className="device-mockup">
-              <div className="macbook-frame">
-                <div className="macbook-screen">
-                  <div className="dashboard-ui">
-                    <div className="dashboard-header">
-                      <div className="header-dot"></div>
-                      <div className="header-dot"></div>
-                      <div className="header-dot"></div>
-                    </div>
-                    <div className="dashboard-content">
-                      <div className="dashboard-stat-row">
-                        <div className="mini-stat-card">
-                          <span className="mini-stat-label">Monthly Revenue</span>
-                          <span className="mini-stat-value">₹2.4L</span>
-                          <span className="mini-stat-trend">↗ +127%</span>
-                        </div>
-                        <div className="mini-stat-card">
-                          <span className="mini-stat-label">Conversion</span>
-                          <span className="mini-stat-value">4.8%</span>
-                          <span className="mini-stat-trend">↗ +2.3%</span>
-                        </div>
-                      </div>
-                      <div className="mini-chart">
-                        <div className="mini-bar" style={{height: '45%'}}></div>
-                        <div className="mini-bar" style={{height: '65%'}}></div>
-                        <div className="mini-bar" style={{height: '50%'}}></div>
-                        <div className="mini-bar" style={{height: '80%'}}></div>
-                        <div className="mini-bar" style={{height: '60%'}}></div>
-                        <div className="mini-bar" style={{height: '90%'}}></div>
-                        <div className="mini-bar" style={{height: '75%'}}></div>
-                        <div className="mini-bar" style={{height: '95%'}}></div>
-                      </div>
-                      <div className="funnel-indicator">
-                        <div className="funnel-step active"></div>
-                        <div className="funnel-step active"></div>
-                        <div className="funnel-step"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="macbook-bottom"></div>
-              </div>
-              
-              {/* Floating UI Cards */}
-              <div className="floating-card floating-card-1">
-                <TrendingUp size={16} />
-                <span className="floating-card-label">Revenue</span>
-                <span className="floating-card-value">+₹1L</span>
-              </div>
-              
-              <div className="floating-card floating-card-2">
-                <Zap size={16} />
-                <span className="floating-card-label">Growth</span>
-                <span className="floating-card-value">3.2x</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section id="how-it-works" className="how-it-works-section">
-        <h2 className="section-title">How ShadowScale Works</h2>
-        <div className="system-grid">
-          {[
-            {
-              icon: <Target size={32} />,
-              title: 'Audience Intelligence Engine',
-              description: 'Deep analysis of your audience behavior, preferences, and monetization potential.'
-            },
-            {
-              icon: <Sparkles size={32} />,
-              title: 'Offer Creation Framework',
-              description: 'AI-powered system to design high-converting offers tailored to your audience.'
-            },
-            {
-              icon: <TrendingUp size={32} />,
-              title: 'Funnel Deployment System',
-              description: 'Automated funnel infrastructure built for maximum conversion and scalability.'
-            },
-            {
-              icon: <Zap size={32} />,
-              title: 'Revenue Scaling Loop',
-              description: 'Continuous optimization engine that compounds your monetization over time.'
-            }
-          ].map((item, index) => (
-            <div key={index} className="system-card">
-              <div className="card-icon">{item.icon}</div>
-              <h3 className="card-title">{item.title}</h3>
-              <p className="card-description">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Product UI Section */}
-      <section className="product-ui-section">
-        <h2 className="section-title">Built Like a Product, Not a Service</h2>
-        <div className="dashboard-showcase">
-          <div className="dashboard-panel main-panel">
-            <div className="panel-header">
-              <div className="panel-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <span className="panel-title">Revenue Dashboard</span>
-            </div>
-            <div className="panel-content">
-              <div className="revenue-stats">
-                <div className="stat-card">
-                  <span className="stat-label">Monthly Revenue</span>
-                  <span className="stat-value">₹2,45,000</span>
-                  <span className="stat-growth">+127% ↗</span>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Conversion Rate</span>
-                  <span className="stat-value">4.8%</span>
-                  <span className="stat-growth">+2.3% ↗</span>
-                </div>
-                <div className="stat-card">
-                  <span className="stat-label">Active Funnels</span>
-                  <span className="stat-value">12</span>
-                  <span className="stat-growth">Running ✓</span>
-                </div>
-              </div>
-              <div className="chart-area">
-                <div className="chart-bars">
-                  {[40, 65, 45, 80, 55, 90, 75, 95].map((height, i) => (
-                    <div key={i} className="chart-bar" style={{ height: `${height}%` }}></div>
-                  ))}
-                </div>
-              </div>
+              <p className="trust-line">
+                <Shield size={14} />
+                Only 10 creators accepted this month
+              </p>
             </div>
           </div>
           
-          <div className="dashboard-panel side-panel">
-            <div className="panel-header">
-              <span className="panel-title">Funnel Analytics</span>
-            </div>
-            <div className="panel-content">
-              <div className="funnel-list">
-                {['Lead Magnet → Webinar', 'Free Trial → Premium', 'Course Launch Sequence'].map((funnel, i) => (
-                  <div key={i} className="funnel-item">
-                    <span className="funnel-name">{funnel}</span>
-                    <span className="funnel-status">Live</span>
+          <div className="hero-visual-immersive">
+            {/* Main Device */}
+            <div className="floating-device">
+              <div className="device-glow"></div>
+              <div className="macbook-pro">
+                <div className="screen-frame">
+                  <div className="screen-header">
+                    <div className="mac-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <span className="screen-title">Revenue Dashboard</span>
                   </div>
-                ))}
+                  <div className="screen-body">
+                    <div className="revenue-metric-hero">
+                      <span className="metric-label-hero">Monthly Revenue</span>
+                      <span className="metric-value-hero">₹{(revenueCount).toLocaleString('en-IN')}</span>
+                      <div className="metric-trend-hero">
+                        <TrendingUp size={18} />
+                        <span>+127% growth</span>
+                      </div>
+                    </div>
+                    <div className="chart-grid-hero">
+                      <div className="bar-hero" style={{height: '48%'}}></div>
+                      <div className="bar-hero" style={{height: '68%'}}></div>
+                      <div className="bar-hero" style={{height: '52%'}}></div>
+                      <div className="bar-hero" style={{height: '85%'}}></div>
+                      <div className="bar-hero" style={{height: '60%'}}></div>
+                      <div className="bar-hero" style={{height: '92%'}}></div>
+                      <div className="bar-hero" style={{height: '75%'}}></div>
+                      <div className="bar-hero" style={{height: '98%'}}></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="device-base"></div>
+              </div>
+            </div>
+
+            {/* Floating UI Elements */}
+            <div className="floating-ui-card card-top">
+              <div className="ui-card-icon">
+                <DollarSign size={16} />
+              </div>
+              <div className="ui-card-content">
+                <span className="ui-card-label">Revenue</span>
+                <span className="ui-card-value">₹1.2L</span>
+              </div>
+            </div>
+
+            <div className="floating-ui-card card-bottom">
+              <div className="ui-card-icon">
+                <BarChart3 size={16} />
+              </div>
+              <div className="ui-card-content">
+                <span className="ui-card-label">Growth</span>
+                <span className="ui-card-value">3.2x</span>
+              </div>
+            </div>
+
+            <div className="floating-ui-card card-left">
+              <div className="ui-card-icon">
+                <Users size={16} />
+              </div>
+              <div className="ui-card-content">
+                <span className="ui-card-label">Conversion</span>
+                <span className="ui-card-value">4.8%</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Results Section */}
-      <section id="results" className="results-section">
-        <h2 className="section-title">Real Systems, Real Results</h2>
-        <div className="results-grid">
-          {[
-            { label: 'Creators scaling to', value: '₹1L+/month', icon: <TrendingUp size={24} /> },
-            { label: 'Average conversion lift', value: '3.2x Higher', icon: <Zap size={24} /> },
-            { label: 'Revenue systems optimized', value: '200+', icon: <Target size={24} /> }
-          ].map((result, index) => (
-            <div key={index} className="result-card">
-              <div className="result-icon">{result.icon}</div>
-              <span className="result-value">{result.value}</span>
-              <span className="result-label">{result.label}</span>
-            </div>
-          ))}
+      {/* Built Different Section - WOW MOMENT */}
+      <section className="built-different-section">
+        <div className="built-different-bg"></div>
+        <div className="floating-icons-bg">
+          <Sparkles className="float-icon icon-1" size={32} />
+          <Zap className="float-icon icon-2" size={28} />
+          <Crown className="float-icon icon-3" size={30} />
+          <Target className="float-icon icon-4" size={26} />
         </div>
+        <h2 className="built-different-title">Built Different</h2>
+        <p className="built-different-subtitle">
+          While others sell courses and communities,<br />
+          we build revenue infrastructure.
+        </p>
       </section>
 
-      {/* Target Section */}
-      <section className="target-section">
-        <h2 className="section-title">Built for Serious Creators</h2>
-        <div className="target-grid">
-          {[
-            { icon: <CheckCircle2 size={28} />, text: '10K+ followers or established audience' },
-            { icon: <CheckCircle2 size={28} />, text: 'Ready to build sustainable income systems' },
-            { icon: <CheckCircle2 size={28} />, text: 'Willing to invest in monetization infrastructure' }
-          ].map((item, index) => (
-            <div key={index} className="target-card">
-              <div className="target-icon-check">{item.icon}</div>
-              <p className="target-text">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Not For Everyone */}
-      <section className="not-for-section">
-        <h2 className="section-title bold-title">Not for Everyone</h2>
-        <div className="not-for-grid">
-          {[
-            { icon: <XCircle size={28} />, text: 'Beginners looking for quick growth hacks' },
-            { icon: <XCircle size={28} />, text: 'Creators not ready to invest in infrastructure' },
-            { icon: <XCircle size={28} />, text: 'People chasing shortcuts and overnight success' }
-          ].map((item, index) => (
-            <div key={index} className="not-for-card">
-              <div className="not-for-icon">{item.icon}</div>
-              <p className="not-for-text">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Exclusivity Section */}
-      <section className="exclusivity-section">
-        <div className="exclusivity-content">
-          <Crown size={48} className="exclusivity-icon" />
-          <h2 className="section-title">Selective by Design</h2>
-          <p className="exclusivity-description">
-            ShadowScale is built for creators who are serious about monetization.
-            We do not work with everyone.
-            Each creator goes through a selection process to ensure real results.
-          </p>
-          <div className="exclusivity-points">
-            {[
-              { icon: <Lock size={20} />, text: 'Limited onboarding slots' },
-              { icon: <Shield size={20} />, text: 'High-performance creators only' },
-              { icon: <Target size={20} />, text: 'Long-term monetization focus' }
-            ].map((point, index) => (
-              <div key={index} className="exclusivity-point">
-                {point.icon}
-                <span>{point.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why ShadowScale Wins */}
-      <section className="why-wins-section">
-        <h2 className="section-title">Why ShadowScale Wins</h2>
-        <div className="wins-grid">
+      {/* How It Works - Overlapping Design */}
+      <section id="system" className="system-section-immersive">
+        <div className="section-overlap"></div>
+        <h2 className="section-title-immersive">The System</h2>
+        <div className="system-grid-immersive">
           {[
             {
-              title: 'AI-Powered Intelligence',
-              description: 'Not guesswork. Data-driven monetization strategies powered by advanced AI models.',
-              icon: <Sparkles size={32} />
+              icon: <Target size={28} />,
+              title: 'Audience Intelligence',
+              description: 'AI-powered analysis of your audience behavior and monetization potential.'
             },
-            {
-              title: 'System, Not Service',
-              description: 'Infrastructure that scales with you. Built for long-term compounding growth.',
-              icon: <Zap size={32} />
-            },
-            {
-              title: 'Selective Onboarding',
-              description: 'We work with fewer creators to deliver exceptional results. Quality over quantity.',
-              icon: <Crown size={32} />
-            }
-          ].map((win, index) => (
-            <div key={index} className="win-card">
-              <div className="win-icon">{win.icon}</div>
-              <h3 className="win-title">{win.title}</h3>
-              <p className="win-description">{win.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Positioning Section */}
-      <section className="positioning-section">
-        <div className="positioning-content">
-          <h2 className="positioning-headline">This is not an agency. This is a system.</h2>
-          <p className="positioning-description">
-            ShadowScale builds monetization infrastructure, not just services.
-            We deploy AI-powered systems that work 24/7 to optimize your revenue,
-            compound your growth, and scale your creator business beyond manual limits.
-          </p>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="features-section">
-        <h2 className="section-title">Core Features</h2>
-        <div className="features-grid">
-          {[
             {
               icon: <Sparkles size={28} />,
-              title: 'AI-Powered Strategy',
-              description: 'Advanced monetization strategies tailored to your audience using machine learning.'
+              title: 'Offer Engineering',
+              description: 'Design high-converting offers that your audience actually wants to buy.'
             },
             {
               icon: <TrendingUp size={28} />,
-              title: 'Funnel Systems',
-              description: 'Automated conversion funnels designed for maximum revenue and minimal friction.'
-            },
-            {
-              icon: <Target size={28} />,
-              title: 'Offer Positioning',
-              description: 'Strategic offer design and positioning that resonates with your audience.'
+              title: 'Funnel Infrastructure',
+              description: 'Automated systems that convert attention into sustainable revenue.'
             },
             {
               icon: <Zap size={28} />,
               title: 'Revenue Optimization',
-              description: 'Continuous A/B testing and optimization to maximize your income over time.'
+              description: 'Continuous testing and refinement to compound your income.'
             }
-          ].map((feature, index) => (
-            <div key={index} className="feature-card">
-              <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
+          ].map((item, index) => (
+            <div key={index} className="system-card-immersive" style={{animationDelay: `${index * 0.1}s`}}>
+              <div className="card-glow-effect"></div>
+              <div className="card-icon-immersive">{item.icon}</div>
+              <h3 className="card-title-immersive">{item.title}</h3>
+              <p className="card-description-immersive">{item.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="final-cta-section">
-        <div className="final-cta-content">
-          <Rocket size={64} className="final-cta-icon" />
-          <h2 className="final-cta-title">Apply to Work With ShadowScale</h2>
-          <p className="final-cta-description">
-            We onboard a limited number of creators each month.
+      {/* Results - Animated Stats */}
+      <section id="results" className="results-section-immersive">
+        <h2 className="section-title-immersive">Real Impact</h2>
+        <div className="results-grid-immersive">
+          {[
+            { value: '₹1L+', label: 'Average monthly revenue', icon: <TrendingUp size={24} />, color: '#667eea' },
+            { value: '3.2x', label: 'Conversion increase', icon: <Zap size={24} />, color: '#764ba2' },
+            { value: '200+', label: 'Revenue systems deployed', icon: <Target size={24} />, color: '#00d4ff' }
+          ].map((result, index) => (
+            <div key={index} className="result-card-immersive">
+              <div className="result-glow" style={{background: `radial-gradient(circle, ${result.color}40 0%, transparent 70%)`}}></div>
+              <div className="result-icon-immersive">{result.icon}</div>
+              <span className="result-value-immersive">{result.value}</span>
+              <span className="result-label-immersive">{result.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Who This Is For */}
+      <section className="target-section-immersive">
+        <div className="target-split">
+          <div className="target-side for-side">
+            <h2 className="target-title">Built For</h2>
+            <div className="target-list">
+              {[
+                'Creators with 10K+ engaged followers',
+                'Ready to invest in real infrastructure',
+                'Want sustainable, scalable income'
+              ].map((item, i) => (
+                <div key={i} className="target-item-immersive">
+                  <CheckCircle2 size={22} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="target-divider"></div>
+          
+          <div className="target-side not-for-side">
+            <h2 className="target-title">Not For</h2>
+            <div className="target-list">
+              {[
+                'Beginners chasing quick wins',
+                'People wanting free solutions',
+                'Those not ready to invest'
+              ].map((item, i) => (
+                <div key={i} className="target-item-immersive not-for">
+                  <XCircle size={22} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features - Visual Cards */}
+      <section id="features" className="features-section-immersive">
+        <h2 className="section-title-immersive">Core Infrastructure</h2>
+        <div className="features-grid-immersive">
+          {[
+            {
+              icon: <Sparkles size={32} />,
+              title: 'AI Strategy Engine',
+              description: 'Machine learning models that optimize your monetization strategy.'
+            },
+            {
+              icon: <TrendingUp size={32} />,
+              title: 'Automated Funnels',
+              description: 'Conversion systems that run 24/7 without manual work.'
+            },
+            {
+              icon: <Target size={32} />,
+              title: 'Offer Positioning',
+              description: 'Strategic frameworks that make your offers irresistible.'
+            },
+            {
+              icon: <Zap size={32} />,
+              title: 'Revenue Scaling',
+              description: 'Compounding optimization that grows your income over time.'
+            }
+          ].map((feature, index) => (
+            <div key={index} className="feature-card-immersive">
+              <div className="feature-card-glow"></div>
+              <div className="feature-icon-immersive">{feature.icon}</div>
+              <h3 className="feature-title-immersive">{feature.title}</h3>
+              <p className="feature-description-immersive">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA - Premium */}
+      <section className="final-cta-immersive">
+        <div className="cta-glow-bg"></div>
+        <div className="final-cta-content-immersive">
+          <Crown size={56} className="cta-crown-icon" />
+          <h2 className="final-cta-title-immersive">Apply to Work With ShadowScale</h2>
+          <p className="final-cta-description-immersive">
+            We onboard a limited number of creators each month.<br />
             Apply now to see if you qualify.
           </p>
-          <button className="btn-primary large" onClick={handleApplyClick}>
+          <button className="btn-primary-glow large-cta" onClick={handleApplyClick}>
             <span>Apply for Access</span>
             <ArrowRight size={24} />
+            <div className="button-glow"></div>
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <img src="/logo.png" alt="ShadowScale" className="footer-logo" />
-          <p className="footer-text">Premium monetization infrastructure for serious creators.</p>
-          <a href="mailto:shadowscalehq@gmail.com" className="footer-email">shadowscalehq@gmail.com</a>
-          <p className="footer-copyright">© 2025 ShadowScale. All rights reserved.</p>
+      <footer className="footer-immersive">
+        <div className="footer-content-immersive">
+          <img src="/logo.png" alt="ShadowScale" className="footer-logo-immersive" />
+          <p className="footer-tagline">Premium monetization infrastructure for serious creators.</p>
+          <a href="mailto:shadowscalehq@gmail.com" className="footer-email-immersive">shadowscalehq@gmail.com</a>
+          <p className="footer-copyright-immersive">© 2025 ShadowScale. All rights reserved.</p>
         </div>
       </footer>
     </div>
