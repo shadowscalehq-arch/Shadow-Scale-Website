@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Spline from '@splinetool/react-spline';
 import { Sparkles, TrendingUp, Target, Shield, Zap, Lock, Crown, Rocket, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
 import '../styles/Home.css';
 
@@ -16,7 +15,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Sticky CTA Button */}
+      {/* Sticky CTA Button - Removed "Made with Emergent" badge */}
       <button className="sticky-cta" onClick={handleApplyClick}>
         <Rocket size={20} />
         Apply for Access
@@ -25,7 +24,9 @@ const Home = () => {
       {/* Navigation Header */}
       <header className="nav-header">
         <div className="nav-content">
-          <img src="/logo.png" alt="ShadowScale" className="logo" />
+          <div className="logo-container">
+            <img src="/logo.png" alt="ShadowScale" className="logo" />
+          </div>
           <nav className="nav-links">
             <a href="#how-it-works" className="nav-link">How It Works</a>
             <a href="#results" className="nav-link">Results</a>
@@ -54,11 +55,12 @@ const Home = () => {
             <p className="hero-subheadline">
               ShadowScale is an AI-powered monetization engine designed for serious creators.
             </p>
-            <p className="hero-extra">
-              We work with a limited number of serious creators only. Application required.
-            </p>
+            <div className="hero-badge">
+              <Lock size={16} />
+              <span>Selective onboarding. Application required.</span>
+            </div>
             <div className="hero-cta-group">
-              <button className="btn-primary" onClick={handleApplyClick}>
+              <button className="btn-primary hero-primary-cta" onClick={handleApplyClick}>
                 <span>Apply for Access</span>
                 <ArrowRight size={20} />
               </button>
@@ -66,12 +68,68 @@ const Home = () => {
                 See How It Works
               </button>
             </div>
-            <p className="hero-microtext">Only a few creators are accepted each month.</p>
+            <p className="hero-microtext">
+              <Shield size={14} className="microtext-icon" />
+              Only a few creators are accepted each month.
+            </p>
           </div>
           
           <div className="hero-visual">
-            <div className="spline-container">
-              <Spline scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode" />
+            <div className="device-mockup">
+              <div className="macbook-frame">
+                <div className="macbook-screen">
+                  <div className="dashboard-ui">
+                    <div className="dashboard-header">
+                      <div className="header-dot"></div>
+                      <div className="header-dot"></div>
+                      <div className="header-dot"></div>
+                    </div>
+                    <div className="dashboard-content">
+                      <div className="dashboard-stat-row">
+                        <div className="mini-stat-card">
+                          <span className="mini-stat-label">Monthly Revenue</span>
+                          <span className="mini-stat-value">₹2.4L</span>
+                          <span className="mini-stat-trend">↗ +127%</span>
+                        </div>
+                        <div className="mini-stat-card">
+                          <span className="mini-stat-label">Conversion</span>
+                          <span className="mini-stat-value">4.8%</span>
+                          <span className="mini-stat-trend">↗ +2.3%</span>
+                        </div>
+                      </div>
+                      <div className="mini-chart">
+                        <div className="mini-bar" style={{height: '45%'}}></div>
+                        <div className="mini-bar" style={{height: '65%'}}></div>
+                        <div className="mini-bar" style={{height: '50%'}}></div>
+                        <div className="mini-bar" style={{height: '80%'}}></div>
+                        <div className="mini-bar" style={{height: '60%'}}></div>
+                        <div className="mini-bar" style={{height: '90%'}}></div>
+                        <div className="mini-bar" style={{height: '75%'}}></div>
+                        <div className="mini-bar" style={{height: '95%'}}></div>
+                      </div>
+                      <div className="funnel-indicator">
+                        <div className="funnel-step active"></div>
+                        <div className="funnel-step active"></div>
+                        <div className="funnel-step"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="macbook-bottom"></div>
+              </div>
+              
+              {/* Floating UI Cards */}
+              <div className="floating-card floating-card-1">
+                <TrendingUp size={16} />
+                <span className="floating-card-label">Revenue</span>
+                <span className="floating-card-value">+₹1L</span>
+              </div>
+              
+              <div className="floating-card floating-card-2">
+                <Zap size={16} />
+                <span className="floating-card-label">Growth</span>
+                <span className="floating-card-value">3.2x</span>
+              </div>
             </div>
           </div>
         </div>
