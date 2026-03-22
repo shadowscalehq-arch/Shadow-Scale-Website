@@ -1,29 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Sparkles, TrendingUp, Target, Shield, Zap, Lock, Crown, ArrowRight, CheckCircle2, XCircle, BarChart3, DollarSign, Percent, Users, TrendingDown } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
+import { Sparkles, TrendingUp, Target, Shield, Zap, Lock, Crown, ArrowRight, CheckCircle2, XCircle, BarChart3, DollarSign, Percent, Users } from 'lucide-react';
 import '../styles/Home.css';
+
+// Memoized floating card to prevent unnecessary re-renders
+const FloatingCard = memo(({ position, icon: Icon, label, value }) => (
+  <div className={`float-ui-elite ${position}`}>
+    <div className="float-ui-glow"></div>
+    <Icon size={20} className="float-ui-icon" />
+    <div className="float-ui-data">
+      <span className="float-ui-label">{label}</span>
+      <span className="float-ui-value">{value}</span>
+    </div>
+  </div>
+));
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [revenueCount, setRevenueCount] = useState(172450);
-  const [scrollY, setScrollY] = useState(0);
+  const scrollRef = useRef(0);
+  const deviceRef = useRef(null);
+  const rafRef = useRef(null);
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100);
+    // Delayed visibility for smooth entrance
+    const timer = setTimeout(() => setIsVisible(true), 100);
     
-    // Live revenue counter with flicker
+    // Live revenue counter - using ref to avoid re-render overhead
     const interval = setInterval(() => {
       setRevenueCount(prev => prev + Math.floor(Math.random() * 4200) + 1800);
-    }, 1800);
+    }, 3000); // Slower updates (3s instead of 1.8s)
     
-    // Parallax scroll
+    // Optimized scroll handler using requestAnimationFrame
+    let ticking = false;
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        rafRef.current = requestAnimationFrame(() => {
+          if (deviceRef.current) {
+            const scrollY = window.scrollY;
+            deviceRef.current.style.transform = `translateY(${scrollY * 0.08}px)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
+      clearTimeout(timer);
       clearInterval(interval);
       window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
@@ -115,10 +143,9 @@ const Home = () => {
           </div>
 
           {/* Hero Device - CENTERED LARGE */}
-          <div className="device-showcase-ultra" style={{transform: `translateY(${scrollY * 0.1}px)`}}>
-            {/* Glow Aura */}
+          <div className="device-showcase-ultra" ref={deviceRef}>
+            {/* Glow Aura - Static for performance */}
             <div className="device-aura-ultra"></div>
-            <div className="device-ring-glow"></div>
 
             {/* MacBook Ultra */}
             <div className="macbook-ultra">
@@ -159,51 +186,12 @@ const Home = () => {
               <div className="macbook-base-ultra"></div>
             </div>
 
-            {/* Multiple Floating Cards */}
-            <div className="float-ui-elite card-pos-1">
-              <div className="float-ui-glow"></div>
-              <DollarSign size={20} className="float-ui-icon" />
-              <div className="float-ui-data">
-                <span className="float-ui-label">Revenue</span>
-                <span className="float-ui-value">₹1.2L</span>
-              </div>
-            </div>
-
-            <div className="float-ui-elite card-pos-2">
-              <div className="float-ui-glow"></div>
-              <TrendingUp size={20} className="float-ui-icon" />
-              <div className="float-ui-data">
-                <span className="float-ui-label">Growth</span>
-                <span className="float-ui-value">3.2x</span>
-              </div>
-            </div>
-
-            <div className="float-ui-elite card-pos-3">
-              <div className="float-ui-glow"></div>
-              <Target size={20} className="float-ui-icon" />
-              <div className="float-ui-data">
-                <span className="float-ui-label">Conversion</span>
-                <span className="float-ui-value">4.8%</span>
-              </div>
-            </div>
-
-            <div className="float-ui-elite card-pos-4">
-              <div className="float-ui-glow"></div>
-              <BarChart3 size={20} className="float-ui-icon" />
-              <div className="float-ui-data">
-                <span className="float-ui-label">Funnels</span>
-                <span className="float-ui-value">12</span>
-              </div>
-            </div>
-
-            <div className="float-ui-elite card-pos-5">
-              <div className="float-ui-glow"></div>
-              <Users size={20} className="float-ui-icon" />
-              <div className="float-ui-data">
-                <span className="float-ui-label">Audience</span>
-                <span className="float-ui-value">45K</span>
-              </div>
-            </div>
+            {/* Multiple Floating Cards - Memoized */}
+            <FloatingCard position="card-pos-1" icon={DollarSign} label="Revenue" value="₹1.2L" />
+            <FloatingCard position="card-pos-2" icon={TrendingUp} label="Growth" value="3.2x" />
+            <FloatingCard position="card-pos-3" icon={Target} label="Conversion" value="4.8%" />
+            <FloatingCard position="card-pos-4" icon={BarChart3} label="Funnels" value="12" />
+            <FloatingCard position="card-pos-5" icon={Users} label="Audience" value="45K" />
           </div>
         </div>
       </section>

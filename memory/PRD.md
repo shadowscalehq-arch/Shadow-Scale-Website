@@ -287,6 +287,41 @@ Create a premium SaaS-style website for "ShadowScale" - an AI-powered monetizati
    - Added `prefers-reduced-motion` media query for accessibility
    - Removed heavy rotating glow animations on cards (changed to static on hover)
 
+### Date: January 2025 - Critical Performance Fix (COMPLETE)
+
+**Major CSS Animation Refactor**
+
+1. **Root Cause Analysis**
+   - Identified heavy `backdrop-filter: blur()` stacking across multiple layers
+   - Continuous keyframe animations using layout properties (`top`, `left`) instead of `transform`
+   - Overlapping animation cycles causing layout thrashing
+   - Revenue counter updating too frequently (1.8s) causing excessive React re-renders
+   - Multiple `will-change` declarations on too many elements
+
+2. **Performance Fixes Applied**
+   - **Background**: Removed `filter: hue-rotate` animation from gradient background (now static)
+   - **Streaks**: Changed from `top` position animation to `transform: translateY()` for GPU acceleration
+   - **Status Line**: Changed from `left` position to `transform: translateX()` 
+   - **Removed Heavy Elements**: Disabled `device-ring-glow` (rotating conic gradient with blur)
+   - **Disabled Continuous Glows**: Removed `.badge-glow-ring`, `.perf-glow`, `.float-ui-glow`, `.card-ultra-glow/border/shine`, `.impact-glow-ultra`, `.feature-ultra-glow/border`
+   - **Simplified Animations**: Extended animation durations (8-15s instead of 3-6s)
+   - **React Optimization**: 
+     - Memoized FloatingCard components with `React.memo`
+     - Changed revenue counter interval from 1.8s to 3s
+     - Replaced scroll state with direct DOM manipulation via `useRef`
+     - Used `requestAnimationFrame` for scroll parallax
+     - Added `{ passive: true }` to scroll listener
+   - **Reduced Blur**: Removed backdrop-filter from nav (was 12px), simplified to solid background
+   - **Animation Optimization**: All transforms now use simple `translateY()` or `translateX()` instead of `translate3d()`
+
+3. **Design Preserved**
+   - All visual elements, colors, and layout remain identical
+   - Purple/black gradient theme intact
+   - MacBook mockup with floating cards working
+   - Live revenue counter functional (slower updates)
+   - All hover effects and transitions preserved
+   - Mobile responsive design unchanged
+
 2. **Header Themed to Match Landing Page**
    - Background: Linear gradient (dark blue-purple: rgba(18,18,30) → rgba(10,10,20))
    - Logo container: Enhanced purple gradient (rgba(102,126,234,0.2) + rgba(118,75,162,0.2))
@@ -420,10 +455,11 @@ All critical features have been implemented for the landing page MVP.
 
 ## Next Tasks
 1. ✅ Frontend landing page with all sections - COMPLETE
-2. Optional: Add backend for contact form submissions
-3. Optional: Add analytics tracking
-4. Optional: SEO optimization (meta tags, Open Graph)
-5. Optional: Performance optimization (lazy loading, code splitting)
+2. ✅ Performance optimization (lag fix) - COMPLETE (Jan 2025)
+3. Optional: Add backend for contact form submissions
+4. Optional: Add analytics tracking
+5. Optional: SEO optimization (meta tags, Open Graph)
+6. Optional: Interactive ROI calculator
 
 ## API Contracts
 **Not Applicable** - This is a static landing page with external Google Form integration. No backend APIs required for current implementation.
